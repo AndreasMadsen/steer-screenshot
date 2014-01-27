@@ -22,11 +22,7 @@ module.exports = function(options, callback) {
 
     var chrome = browser(settings);
 
-    chrome.once('open', function () {
-        chrome.inspector.Page.enable(function () {
-            chrome.inspector.Console.enable(callback);
-        });
-    });
+    chrome.once('open', callback);
 
     var output = fs.createWriteStream(
         path.resolve(__dirname, 'chrome.out'),

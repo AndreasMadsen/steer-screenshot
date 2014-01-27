@@ -23,7 +23,7 @@ server.on('request', router.dispatch.bind(router));
 server.listen(0, function() {
   var host = 'http://127.0.0.1:' + server.address().port;
 
-  var chrome = browser({ size: [800, 600] }, function() {
+  var chrome = browser({ size: [800, 600], permissions: ['tabs'] }, function() {
     var originalExtensionSend = chrome.extension.send;
 
     test('taking screenshot outputs a base64 data url string', function(t) {
