@@ -18,12 +18,12 @@
   ],
   "dependencies": {
     "endpoint": "0.4.x",
-    "async": "0.2.x",
-    "gm": "1.14.x"
+    "async": "0.9.x",
+    "gm": "1.17.x"
   },
   "devDependencies": {
     "tap": "0.4.x",
-    "steer": "0.4.x",
+    "steer": "0.5.x",
     "filed": "0.1.x",
     "director": "1.2.x"
   },
