@@ -35,11 +35,11 @@ module.exports = function screenshot(browser, options, callback) {
 
     // validate options
     if (options.format !== 'jpeg' && options.format !== 'png') {
-      throw new TypeError('steer-screenshot only supports JPEG and PNG images');
+      throw new Error('only JPEG and PNG are supported');
     }
 
     if (typeof options.quality !== 'number') {
-      throw new TypeError('steer-screenshot\'s "quality" option expects a Number');
+      throw new TypeError('quality option must be a number');
     }
 
   }
