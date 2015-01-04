@@ -40,8 +40,12 @@ var chrome = steer({
 
 chrome.once('open', function () {
 
-  // The second argument (60) is the JPEG quality
-  screenshot(chrome, 60, function (err, buffer, attemps) {
+  var options = {
+    format: 'png', // defaults to "jpeg", "png" and "jpg" is also valid
+    quality: 100 // defaults is 100, 0 <= quality <= 100
+  };
+
+  screenshot(chrome, options, function (err, buffer, attemps) {
     if (err) throw err;
     console.log('Screenshot taken after ' + attemps + ' attemps');
     fs.writeFileSync('picture.jpg', buffer);

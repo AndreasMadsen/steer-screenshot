@@ -3,10 +3,46 @@ var gm = require('gm');
 var async = require('async');
 var endpoint = require('endpoint');
 
-module.exports = function screenshot(browser, quality, callback) {
+var defaults = {
+  format: 'jpeg',
+  quality: 100
+};
+
+module.exports = function screenshot(browser, options, callback) {
   var retryCount = 5;
   var currentAttempt = 1;
   var timeouts = [10, 100, 250, 500];
+
+  // default arguments
+  if (!options) {
+
+    options = defaults;
+
+  } else {
+
+    if (!options.format) {
+      options.format = defaults.format;
+    }
+
+    if (options.quality === undefined) {
+      options.quality = defaults.quality;
+    }
+
+    // normalize format
+    if (options.format === 'jpg') {
+      options.format = 'jpeg';
+    }
+
+    // validate options
+    if (options.format !== 'jpeg' && options.format !== 'png') {
+      throw new Error('only JPEG and PNG are supported');
+    }
+
+    if (typeof options.quality !== 'number') {
+      throw new TypeError('quality option must be a number');
+    }
+
+  }
 
   // The error is never null in this function call
   function retry(err) {
@@ -23,7 +59,8 @@ module.exports = function screenshot(browser, quality, callback) {
 
   function attempt() {
     browser.extension.send('chrome.tabs.captureVisibleTab', null, {
-        'quality': quality
+        format: options.format,
+        quality: options.quality
     }, function(err, img) {
       if (err) return callback(err, null, currentAttempt);
 
@@ -35,7 +72,7 @@ module.exports = function screenshot(browser, quality, callback) {
       }
 
       // Validate base64 url prefix
-      var prefix = 'data:image/jpeg;base64,';
+      var prefix = 'data:image/' + options.format + ';base64,';
       var header = img.substring(0, prefix.length);
       if (header !== prefix) {
         err = new Error('Screenshot generated is not a data-url');
@@ -44,7 +81,7 @@ module.exports = function screenshot(browser, quality, callback) {
 
       // Validate that its a real image
       var buffer = new Buffer(img.slice(prefix.length), 'base64');
-      gm(buffer, 'validate.jpeg').stream(function(err, stdout, stderr) {
+      gm(buffer, 'validate.' + options.format).stream(function(err, stdout, stderr) {
         if (err) return callback(err, null, currentAttempt);
 
         async.parallel({
