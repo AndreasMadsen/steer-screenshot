@@ -41,9 +41,9 @@ var chrome = steer({
 chrome.once('open', function () {
 
   var options = {
-    format: 'png', // defaults to "jpeg", "png"|"jpeg"
-    quality: 100 // defaults to 100, 0 <= quality <= 100,
-  }
+    format: 'png', // defaults to "jpeg", "png" and "jpg" is also valid
+    quality: 100 // defaults is 100, 0 <= quality <= 100
+  };
 
   screenshot(chrome, options, function (err, buffer, attemps) {
     if (err) throw err;

@@ -24,7 +24,7 @@ module.exports = function screenshot(browser, options, callback) {
       options.format = defaults.format;
     }
 
-    if (!options.quality) {
+    if (options.quality === undefined) {
       options.quality = defaults.quality;
     }
 
