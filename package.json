@@ -1,7 +1,7 @@
 {
   "name": "steer-screenshot",
   "description": "Take a screenshot of a google chrome window",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
   "main": "./steer-screenshot.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "tap": "0.6.x",
-    "steer": "0.5.x",
+    "steer": "0.6.x",
     "filed": "0.1.x",
     "director": "1.2.x"
   },
